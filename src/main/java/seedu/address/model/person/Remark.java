@@ -1,11 +1,21 @@
 package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
+
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Remark {
+    /**
+     * The constant MESSAGE_CONSTRAINTS.
+     */
     public final String value;
+
+    /**
+     * Instantiates a new Remark.
+     *
+     * @param remark the remark
+     */
     public Remark(String remark) {
         requireNonNull(remark);
         value = remark;
