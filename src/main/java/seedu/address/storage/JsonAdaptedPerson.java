@@ -58,7 +58,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        remark = source.getRemark().value;
+        remark = source.getRemark() != null ? source.getRemark().value : null;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -110,6 +110,7 @@ class JsonAdaptedPerson {
         if (remark == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
         }
+
         final Remark modelRemark = new Remark("");
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
