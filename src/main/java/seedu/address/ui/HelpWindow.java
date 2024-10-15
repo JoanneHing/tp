@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -35,16 +39,18 @@ public class HelpWindow extends UiPart<Stage> {
             + "   Format: clear\n\n"
             + "8. exit: Exits the program\n"
             + "   Format: exit\n\n"
-            + "For more detailed information, please refer to the links below\n";
+            + "For more detailed information, click the buttons below to open:\n"
+            + "- User Guide\n"
+            + "- README";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
     @FXML
-    private Button copyUserGuideButton;
+    private Button openUserGuideButton;
 
     @FXML
-    private Button copyProductWebsiteButton;
+    private Button openProductWebsiteButton;
 
     @FXML
     private TextArea helpMessageArea;
@@ -114,25 +120,26 @@ public class HelpWindow extends UiPart<Stage> {
     }
 
     /**
-     * Copies the URL to the user guide to the clipboard.
+     * Open the URL to the user guide to the clipboard.
      */
     @FXML
-    private void copyUserGuideUrl() {
-        copyToClipboard(USERGUIDE_URL);
+    private void openUserGuideUrl() {
+        openUrlInBrowser(USERGUIDE_URL);
     }
 
     /**
-     * Copies the URL to the README to the clipboard.
+     * Opens the URL to the Product Website to the clipboard.
      */
     @FXML
-    private void copyProductWebsite() {
-        copyToClipboard(PRODUCT_WEBSITE);
+    private void openProductWebsite() {
+        openUrlInBrowser(PRODUCT_WEBSITE);
     }
 
-    private void copyToClipboard(String content) {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent url = new ClipboardContent();
-        url.putString(content);
-        clipboard.setContent(url);
+    private void openUrlInBrowser(String url) {
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException e) {
+            logger.warning("Error opening URL: " + url);
+        }
     }
 }
